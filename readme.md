@@ -59,6 +59,7 @@ Python>yara_find_text(here(), 0,0, "Err..", SEARCH_NEXT|SEARCH_DOWN|SEARCH_REGEX
 ## Notes
  - Very little error handling
  - IDA's search is not case-sensitive by default. This code is also not case-sensitive by default.   
+ - I tried to match IDA arguments so some args do nothing but still need to be populated. 
  - Much faster than IDA's search because the data is not constantly loaded. 
  - If you edit the IDB, execute `reload_yara_mem` to resync the memory.
 
