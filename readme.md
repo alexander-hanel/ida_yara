@@ -4,6 +4,35 @@ A python script that can be used to scan data within in an IDB using Yara. The c
 ## Requirements
  - Yara 3+
 
+## Usage 
+Same as IDA's `find_text` and `find_binary`. 
+
+`yara_find_text(start_ea, y, x, ustr, sflag=0)`
+ - `start_ea` = offset to start from 
+ - `x` = set to 0 (ignored)
+ - `y` = set to 0 (ignored)
+ - `ustr` = string pattern to search for. If regex, the `SEARCH_REGEX` must be passed as a sflag
+ - `sflag` = if blank, search, ascii, down and return all matches 
+
+`yara_find_binary(start_ea, ubinstr, radix=16, sflag=0)`
+ - `start_ea` = offset to start from 
+ - `ubinstr` = binary search pattern 
+ - `radix` = set to 0 (ignored)
+ - `sflag` = if blank, search, down and return all matches 
+ 
+ Search Flags 
+ - `SEARCH_UP` = search up return single match
+ - `SEARCH_DOWN` = search down return single match
+ - `SEARCH_UP|SEARCH_NEXT` = return all up from ea with the order being closest to furthest
+ - `SEARCH_DOWN|SEARCH_DOWN` = return all down from ea
+ - `SEARCH_DOWN` = same as SEARCH_DOWN
+ - `SEARCH_UNICODE` = search Unicode aka wide in Yara. 
+ - `SEARCH_CASE` = match case (not on by default)
+ - `SEARCH_BRK` = ignored
+ - `SEARCH_IDENT` = ignored
+ - `SEARCH_NOSHOW` = ignored
+ - `SEARCH_NOBRK` = ignored
+ 
 ## Example
 
 ### Binary Examples
