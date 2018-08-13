@@ -1,5 +1,5 @@
 # ida_yara
-A python script that can be used to scan data within in an IDB using Yara. The code mimics [IDA](https://www.hex-rays.com/products/ida/support/idadoc/284.shtml)'s `find_text` and `find_binary`. Open up the script in IDA and you should be good to go.
+A python script that can be used to scan data within in an IDB using Yara. The code mimics [IDA](https://www.hex-rays.com/products/ida/support/idadoc/284.shtml)'s `find_text` and `find_binary`. The script creates the Yara signature based off of the search and its search flags. Open up the script in IDA and you should be good to go.
 
 ## Requirements
  - Yara 3+
