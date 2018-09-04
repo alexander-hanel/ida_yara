@@ -1,13 +1,20 @@
 """ida_yara.py: python script that can be used to scan data within in an IDB using Yara."""
 
 __author__ = "Alexander Hanel"
-__version__ = "1.0.0"
+__version__ = "1.1"
+
+"""
+    Versions:
+        1.0 - initial creation
+        1.1 - fixed overflow error whe reading bytes of 64-bit address using range/xrange
+"""
 
 import idaapi
 import idautils
 import idc
 import imp
 import bisect
+import operator
 try:
     imp.find_module('yara')
     import yara
@@ -133,6 +140,17 @@ def _yara_compile(signature):
         return False, None
     return True, rules
 
+def _wowrange(start, stop, step=1):
+    #source https://stackoverflow.com/a/1482502
+    if step == 0:
+        raise ValueError('step must be != 0')
+    elif step < 0:
+        proceed = operator.gt
+    else:
+        proceed = operator.lt
+    while proceed(start, stop):
+        yield start
+        start += step
 
 def _get_memory():
     """
@@ -146,7 +164,8 @@ def _get_memory():
     start_len = 0
     for start in segments_starts:
         end = idc.get_segm_end(start)
-        for ea in xrange(start, end):
+        # range or xrange can fail on 64-bit addresses due to an overflow
+        for ea in _wowrange(start, end):
             result += chr(idc.Byte(ea))
         offsets.append((start, start_len, len(result)))
         start_len = len(result)
